@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+/* eslint-disable no-unused-vars */
+import React, {useState} from 'react';
+import { GlobalStyle } from './styled/globalstyle';
+import Routes from './routes';
+import { temaClaro, temaEscuro } from '../src/styled/temas';
+import { ThemeProvider } from 'styled-components';
+import {switcherTema} from './components/SwitcherTheme/switcher';
 import './App.css';
+import buttonTheme from '../src/styled/buttontheme';
+
 
 function App() {
+
+  const [tema, setTema] = useState(true);
+  const toggleTema = () => {
+    console.log(tema);
+    setTema((tema) => !tema);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <> 
+      <ThemeProvider theme={tema ? temaClaro : temaEscuro}>
+        <GlobalStyle />
+          <buttonTheme onClick={toggleTema}>
+            <switcherTema tema={tema}/>
+            <span>Dark mode</span>
+          </buttonTheme>
+          <Routes/>
+      </ThemeProvider>
+    </>
   );
 }
-
 export default App;
